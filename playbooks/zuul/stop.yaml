@@ -12,7 +12,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 ---
-- hosts: zuul-executor
+- hosts: zuul-executor:!disabled
   tasks:
     - name: stopping zuul-executor
       become: true
@@ -27,7 +27,7 @@
         state: absent
         timeout: 11400
 
-- hosts: zuul-merger
+- hosts: zuul-merger:!disabled
   tasks:
     - name: stopping zuul-merger
       become: true
@@ -42,7 +42,7 @@
         state: absent
         timeout: 11400
 
-- hosts: zuul-web
+- hosts: zuul-web:!disabled
   tasks:
     - name: stopping zuul-web
       become: true
@@ -57,7 +57,7 @@
         state: absent
         timeout: 11400
 
-- hosts: zuul-fingergw
+- hosts: zuul-fingergw:!disabled
   tasks:
     - name: stopping zuul-fingergw
       become: true
@@ -72,7 +72,7 @@
         state: absent
         timeout: 11400
 
-- hosts: zuul-scheduler
+- hosts: zuul-scheduler:!disabled
   tasks:
     - name: stopping zuul-scheduler
       become: true

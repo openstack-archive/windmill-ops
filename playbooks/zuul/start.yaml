@@ -12,7 +12,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 ---
-- hosts: zuul-scheduler
+- hosts: zuul-scheduler:!disabled
   tasks:
     - name: starting zuul-scheduler
       become: true
@@ -20,7 +20,7 @@
         name: zuul-scheduler
         state: started
 
-- hosts: zuul-merger
+- hosts: zuul-merger:!disabled
   tasks:
     - name: starting zuul-merger
       become: true
@@ -28,7 +28,7 @@
         name: zuul-merger
         state: started
 
-- hosts: zuul-executor
+- hosts: zuul-executor:!disabled
   tasks:
     - name: starting zuul-executor
       become: true
@@ -36,7 +36,7 @@
         name: zuul-executor
         state: started
 
-- hosts: zuul-fingergw
+- hosts: zuul-fingergw:!disabled
   tasks:
     - name: starting zuul-fingergw
       become: true
@@ -44,7 +44,7 @@
         name: zuul-fingergw
         state: started
 
-- hosts: zuul-web
+- hosts: zuul-web:!disabled
   tasks:
     - name: starting zuul-web
       become: true
