@@ -1,0 +1,53 @@
+# Copyright 2019 Red Hat, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+---
+- hosts: zuul-scheduler
+  tasks:
+    - name: starting zuul-scheduler
+      become: true
+      systemd:
+        name: zuul-scheduler
+        state: started
+
+- hosts: zuul-merger
+  tasks:
+    - name: starting zuul-merger
+      become: true
+      systemd:
+        name: zuul-merger
+        state: started
+
+- hosts: zuul-executor
+  tasks:
+    - name: starting zuul-executor
+      become: true
+      systemd:
+        name: zuul-executor
+        state: started
+
+- hosts: zuul-fingergw
+  tasks:
+    - name: starting zuul-fingergw
+      become: true
+      systemd:
+        name: zuul-fingergw
+        state: started
+
+- hosts: zuul-web
+  tasks:
+    - name: starting zuul-web
+      become: true
+      systemd:
+        name: zuul-web
+        state: started
