@@ -1,0 +1,12 @@
+---
+- hosts: all
+  tasks:
+    - name: Setup users role
+      include_role:
+        name: users
+
+    - name: Disable password for sudo users
+      become: true
+      copy:
+        content: "%sudo ALL=(ALL) NOPASSWD: ALL"
+        dest: /etc/sudoers.d/sudo
