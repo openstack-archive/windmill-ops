@@ -1,5 +1,8 @@
 ---
 - project:
+    templates:
+      - windmill-jobs-fedora-latest
+      - windmill-jobs-bionic
     check:
       jobs:
         - openstack-tox-linters
