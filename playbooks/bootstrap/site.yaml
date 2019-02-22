@@ -1,0 +1,14 @@
+---
+- hosts: all
+  tasks:
+    - name: Setup users role
+      include_role:
+        name: users
+
+    - name: Setup openstack.sudoers role
+      include_role:
+        name: openstack.sudoers
+
+    - name: Setup openstack.virtualenv role
+      include_role:
+        name: openstack.virtualenv
