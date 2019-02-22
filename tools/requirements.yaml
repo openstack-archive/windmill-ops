@@ -1,0 +1,6 @@
+---
+- name: openstack.sudoers
+  src: git+https://git.openstack.org/openstack/ansible-role-sudoers
+
+- name: openstack.virtualenv
+  src: git+https://git.openstack.org/openstack/ansible-role-virtualenv
