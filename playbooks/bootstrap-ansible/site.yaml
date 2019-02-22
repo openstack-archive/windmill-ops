@@ -1,0 +1,29 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks:
+    - name: bootstrap ansible
+      raw: sudo apt-get update && sudo apt-get install -y python3-minimal && sudo apt-get clean
+
+- hosts: all
+  tasks:
+    - name: Update apt cache
+      become: true
+      apt:
+        update_cache: true
+        upgrade: dist
+
+- import_playbook: ../bootstrap/site.yaml
+
+- hosts: all
+  tasks:
+    - name: reboot
+      become: true
+      reboot:
+
+    # NOTE(pabelanger): This user should be completely removed but cannot here
+    # because we are using the ubuntu user to bootstrap the server.
+    - name: Disable SSH access for ubuntu user
+      file:
+        path: ~/.ssh
+        state: absent
