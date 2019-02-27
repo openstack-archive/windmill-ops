@@ -13,7 +13,7 @@
 # under the License.
 ---
 - name: Bootstrap all hosts
-  hosts: all,!disabled
+  hosts: all:!disabled
   tasks:
     - name: Setup users role
       include_role:
@@ -28,7 +28,7 @@
         name: openstack.virtualenv
 
 - name: Bootstrap bastion hosts
-  hosts: bastion,!disabled
+  hosts: bastion:!disabled
   tasks:
     - name: Setup openstack.ansible role
       include_role:
