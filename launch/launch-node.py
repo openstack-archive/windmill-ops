@@ -63,7 +63,7 @@ class AnsibleRunner(object):
             shutil.rmtree(self.root)
 
 
-def bootstrap_server(server, key, name, keep, timeout):
+def bootstrap_server(server, key, name, group, keep, timeout):
     ip = server.public_v4
     ssh_kwargs = dict(pkey=key)
     ansible_user = None
@@ -86,8 +86,10 @@ def bootstrap_server(server, key, name, keep, timeout):
 
         with open(runner.hosts, 'w') as inventory_file:
             inventory_file.write(
-                "{host} ansible_host={ip} ansible_user={user}".format(
-                    host=name, ip=server.interface_ip, user=ansible_user))
+                "[{group}]\n{host} ansible_host={ip} "
+                "ansible_user={user}".format(
+                    group=group, host=name, ip=server.interface_ip,
+                    user=ansible_user))
 
         project_dir = os.path.join(
             SCRIPT_DIR, '..', 'playbooks', 'bootstrap-ansible')
@@ -103,7 +105,7 @@ def bootstrap_server(server, key, name, keep, timeout):
             raise Exception("Ansible runner failed")
 
 
-def build_server(cloud, name, image, flavor,
+def build_server(cloud, name, group, image, flavor,
                  volume, keep, network, boot_from_volume, config_drive,
                  mount_path, fs_label, availability_zone, environment,
                  volume_size, timeout):
@@ -145,7 +147,7 @@ def build_server(cloud, name, image, flavor,
 
         server = cloud.get_openstack_vars(server)
 
-        bootstrap_server(server, key, name, keep, timeout)
+        bootstrap_server(server, key, name, group, keep, timeout)
 
     except Exception:
         print("****")
@@ -171,6 +173,7 @@ def build_server(cloud, name, image, flavor,
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("name", help="server name")
+    parser.add_argument("group", help="server group")
     parser.add_argument("--cloud", dest="cloud", required=True,
                         help="cloud name")
     parser.add_argument("--region", dest="region",
@@ -244,7 +247,7 @@ def main():
             print(i.name)
         sys.exit(1)
 
-    server = build_server(cloud, options.name, image, flavor,
+    server = build_server(cloud, options.name, options.group, image, flavor,
                           options.volume, options.keep,
                           options.network, options.boot_from_volume,
                           options.config_drive,
