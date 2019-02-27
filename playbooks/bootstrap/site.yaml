@@ -26,3 +26,10 @@
     - name: Setup openstack.virtualenv role
       include_role:
         name: openstack.virtualenv
+
+- name: Bootstrap bastion hosts
+  hosts: bastion,!disabled
+  tasks:
+    - name: Setup openstack.ansible role
+      include_role:
+        name: openstack.ansible
