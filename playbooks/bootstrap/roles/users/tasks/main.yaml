@@ -38,3 +38,9 @@
     state: present
     user: "{{ item.name }}"
   with_items: "{{ windmill_users }}"
+
+- name: Disable password for sudo users
+  become: true
+  copy:
+    content: "%sudo ALL=(ALL) NOPASSWD: ALL"
+    dest: /etc/sudoers.d/sudo
