@@ -94,12 +94,9 @@ def bootstrap_server(server, key, name, group, keep, timeout):
         project_dir = os.path.join(
             SCRIPT_DIR, '..', 'playbooks', 'bootstrap-ansible')
 
-        roles_path = os.path.join(
-            SCRIPT_DIR, '..', 'playbooks', 'roles')
-
         r = ansible_runner.run(
             private_data_dir=runner.root, playbook='site.yaml',
-            project_dir=project_dir, roles_path=[roles_path])
+            project_dir=project_dir)
 
         if r.rc:
             raise Exception("Ansible runner failed")
