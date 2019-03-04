@@ -221,10 +221,10 @@ def main():
 
     openstack.enable_logging(debug=options.verbose)
 
-    cloud_kwargs = None
+    cloud_kwargs = {}
     if options.region:
         cloud_kwargs['region_name'] = options.region
-    cloud = openstack.connect(cloud=options.cloud)
+    cloud = openstack.connect(cloud=options.cloud, **cloud_kwargs)
 
     flavor = cloud.get_flavor(options.flavor)
     if flavor:
