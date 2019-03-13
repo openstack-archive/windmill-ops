@@ -12,24 +12,9 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 ---
-- name: Bootstrap all hosts
-  hosts: all:!disabled
-  tasks:
-    - name: Setup users role
-      include_role:
-        name: users
+swap_file_group: root
+swap_file_mode: 0600
+swap_file_owner: root
+swap_file_path: /root/swapfile
 
-    - name: Setup swap role
-      include_role:
-        name: swap
-
-    - name: Setup openstack.virtualenv role
-      include_role:
-        name: openstack.virtualenv
-
-- name: Bootstrap bastion hosts
-  hosts: bastion:!disabled
-  tasks:
-    - name: Setup openstack.ansible role
-      include_role:
-        name: openstack.ansible
+swap_size_mb: "{{ ansible_memtotal_mb * 2 }}
