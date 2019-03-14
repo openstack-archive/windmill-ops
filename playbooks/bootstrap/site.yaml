@@ -12,6 +12,14 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 ---
+- name: Configure SSH known_hosts
+  hosts: bastion:!disabled
+  tasks:
+    - name: Ensure SSH host keys are known
+      template:
+        dest: ~/.ssh/known_hosts
+        src: bastion/root/.ssh/known_hosts.j2
+
 - name: Bootstrap all hosts
   hosts: all:!disabled
   tasks:
