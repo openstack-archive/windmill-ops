@@ -15,6 +15,7 @@
 # limitations under the License.
 
 import socket
+import subprocess
 import time
 
 import paramiko
@@ -30,6 +31,29 @@ def iterate_timeout(max_seconds, purpose):
         yield count
         time.sleep(2)
     raise Exception("Timeout waiting for %s" % purpose)
+
+
+def nodescan(ip, port=22, timeout=60):
+    '''
+    Scan the IP address for public SSH keys.
+    '''
+
+    key = None
+    output = None
+    for count in iterate_timeout(
+            timeout, "connection to %s on port %s" % (ip, port)):
+
+        try:
+            output = subprocess.check_output(
+                ['ssh-keyscan', '-t', 'ed25519', '-p', str(port), str(ip)])
+            if output:
+                break
+        except Exception as e:
+            log.exception("ssh-keyscan failure: %s", e)
+
+    key = output.split()[2].decode('utf8')
+
+    return key
 
 
 def ssh_connect(ip, username, connect_kwargs={}, timeout=60):
