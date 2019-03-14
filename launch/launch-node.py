@@ -69,6 +69,10 @@ def bootstrap_server(server, key, name, group, keep, timeout):
     ansible_user = None
 
     print("--- Running initial configuration on host %s ---" % ip)
+    host_key = utils.nodescan(ip)
+    if not host_key:
+        raise Exception("Unable to find ssh-ecdsa SSH host key")
+
     for username in ['ubuntu', 'centos']:
         ssh_client = utils.ssh_connect(
             ip, username, ssh_kwargs, timeout=timeout)
@@ -87,9 +91,10 @@ def bootstrap_server(server, key, name, group, keep, timeout):
         with open(runner.hosts, 'w') as inventory_file:
             inventory_file.write(
                 "[{group}]\n{host} ansible_host={ip} "
-                "ansible_user={user}".format(
+                "ansible_user={user} "
+                "ansible_ssh_host_key_ed25519_public={host_key}".format(
                     group=group, host=name, ip=server.interface_ip,
-                    user=ansible_user))
+                    user=ansible_user, host_key=host_key))
 
         project_dir = os.path.join(
             SCRIPT_DIR, '..', 'playbooks', 'bootstrap-ansible')
