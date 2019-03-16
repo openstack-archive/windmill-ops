@@ -15,29 +15,29 @@
 - name: Create windmill_users group
   become: true
   group:
-    name: "{{ item.name }}"
-    gid: "{{ item.gid }}"
+    name: "{{ item }}"
+    gid: "{{ windmill_users[item].gid }}"
     state: present
-  with_items: "{{ windmill_users }}"
+  with_items: "{{ windmill_root_users }}"
 
 - name: Create windmill_users user
   become: true
   user:
-    name: "{{ item.name }}"
-    group: "{{ item.gid }}"
+    name: "{{ item }}"
+    group: "{{ windmill_users[item].gid }}"
     groups: sudo
     shell: /bin/bash
-    uid: "{{ item.uid }}"
-  with_items: "{{ windmill_users }}"
+    uid: "{{ windmill_users[item].uid }}"
+  with_items: "{{ windmill_root_users }}"
 
 - name: Add SSH public key
   become: true
   authorized_key:
     exclusive: true
-    key: "{{ item.key }}"
+    key: "{{ windmill_users[item].key }}"
     state: present
-    user: "{{ item.name }}"
-  with_items: "{{ windmill_users }}"
+    user: "{{ item }}"
+  with_items: "{{ windmill_root_users }}"
 
 - name: Disable password for sudo users
   become: true
