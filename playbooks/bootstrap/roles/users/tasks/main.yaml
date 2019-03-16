@@ -12,6 +12,9 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 ---
+- name: Include OS-specific variables
+  include_vars: "{{ ansible_os_family | lower }}.yaml"
+
 - name: Create windmill_users group
   become: true
   group:
@@ -25,7 +28,7 @@
   user:
     name: "{{ item }}"
     group: "{{ windmill_users[item].gid }}"
-    groups: sudo
+    groups: "{{ __windmill_users_user_groups }}"
     shell: /bin/bash
     uid: "{{ windmill_users[item].uid }}"
   with_items: "{{ windmill_root_users }}"
