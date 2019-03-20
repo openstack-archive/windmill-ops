@@ -100,8 +100,8 @@ def bootstrap_server(server, key, name, group, keep, timeout):
             SCRIPT_DIR, '..', 'playbooks', 'bootstrap-ansible')
 
         r = ansible_runner.run(
-            private_data_dir=runner.root, playbook='site.yaml',
-            project_dir=project_dir)
+            inventory=runner.hosts, private_data_dir=runner.root,
+            playbook='site.yaml', project_dir=project_dir)
 
         if r.rc:
             raise Exception("Ansible runner failed")
