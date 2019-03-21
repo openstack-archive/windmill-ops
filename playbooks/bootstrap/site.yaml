@@ -36,6 +36,10 @@
       include_role:
         name: openstack.virtualenv
 
+    - name: Setup iptables role
+      include_role:
+        name: iptables
+
 - name: Bootstrap bastion hosts
   hosts: bastion:!disabled
   tasks:
