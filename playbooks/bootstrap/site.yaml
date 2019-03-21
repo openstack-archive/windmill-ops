@@ -36,6 +36,13 @@
       include_role:
         name: openstack.virtualenv
 
+    # NOTE(pabelanger): We currently only support debuntu, this needs to be
+    # fixed!
+    - name: Setup iptables role
+      include_role:
+        name: iptables
+      when: ansible_os_family == 'Debian'
+
 - name: Bootstrap bastion hosts
   hosts: bastion:!disabled
   tasks:
