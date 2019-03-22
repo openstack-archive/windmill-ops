@@ -22,7 +22,10 @@
 
 # Host specific rules
 {% for host in iptables_allowed_hosts %}
-{% for addr in host.hostname | dns_a %}
+{% if host['address'] | ipv4 %}
+-A INPUT {% if host['protocol'] == 'tcp' %}-m state --state NEW {% endif %}-m {{ host['protocol'] }} -p {{ host['protocol'] }} -s {{ host['address'] | ipv4 }} --dport {{ host['port'] }} -j ACCEPT
+{% endif %}
+{% for addr in host['address'] | dns_a %}
 -A INPUT {% if host['protocol'] == 'tcp' %}-m state --state NEW {% endif %}-m {{ host['protocol'] }} -p {{ host['protocol'] }} -s {{ addr | ipv4 }} --dport {{ host['port'] }} -j ACCEPT
 {% endfor %}
 {% endfor %}
