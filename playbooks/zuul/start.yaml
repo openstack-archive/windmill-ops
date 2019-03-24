@@ -12,6 +12,14 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 ---
+- hosts: gear:!disabled
+  tasks:
+    - name: starting gear
+      become: true
+      systemd:
+        name: gear
+        state: started
+
 - hosts: zuul-scheduler:!disabled
   tasks:
     - name: starting zuul-scheduler

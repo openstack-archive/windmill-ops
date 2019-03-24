@@ -86,3 +86,18 @@
         path: "/proc/{{ result.status.MainPID }}/status"
         state: absent
         timeout: 11400
+
+- hosts: gear:!disabled
+  tasks:
+    - name: stopping gear
+      become: true
+      systemd:
+        name: gear
+        state: stopped
+      register: result
+
+    - name: Wait for (3h10m) to stop gear
+      wait_for:
+        path: "/proc/{{ result.status.MainPID }}/status"
+        state: absent
+        timeout: 11400
