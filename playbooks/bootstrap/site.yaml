@@ -28,6 +28,10 @@
       include_role:
         name: users
 
+    - name: Setup hostname role
+      include_role:
+        name: hostname
+
     - name: Setup swap role
       include_role:
         name: swap
