@@ -61,3 +61,12 @@
   copy:
     content: "%{{ __windmill_users_sudo_group }} ALL=(ALL) NOPASSWD: ALL"
     dest: /etc/sudoers.d/sudo
+
+- name: Setup root user forward file
+  become: true
+  template:
+    dest: /root/.forward
+    group: root
+    mode: 0644
+    owner: root
+    src: root/.forward.j2
