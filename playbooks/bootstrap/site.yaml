@@ -36,6 +36,10 @@
       include_role:
         name: swap
 
+    - name: Setup haveged role
+      include_role:
+        name: haveged
+
     - name: Setup postfix role
       include_role:
         name: postfix
