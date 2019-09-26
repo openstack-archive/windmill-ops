@@ -1,4 +1,0 @@
-ansible>=2.4.0
--e git+https://github.com/ansible/ansible-runner.git#egg=ansible-runner
-openstacksdk
-paramiko

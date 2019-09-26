@@ -1,4 +1,0 @@
-hacking<0.11,>=0.10
-ansible-lint
-ara
-yamllint
